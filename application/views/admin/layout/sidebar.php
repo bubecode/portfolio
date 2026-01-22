@@ -1,27 +1,27 @@
         <!-- Sidebar -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <i class="fas fa-layer-group me-2"></i> Portfolio<span class="fw-light ms-1">Admin</span>
+                <span class="brand-text">PortfolioAdmin</span>
             </div>
             
-            <div class="sidebar-nav">
-                <div class="sidebar-label">Core</div>
+            <div class="sidebar-content">
+                <div class="sidebar-section-label">Core</div>
                 <a href="<?php echo site_url('admin/dashboard'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'dashboard') ? 'active' : ''; ?>">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                    <i class="fas fa-chart-line"></i> Dashboard
                 </a>
 
-                <div class="sidebar-label mt-3">Content Management</div>
+                <div class="sidebar-section-label">Portfolio Content</div>
                 <a href="<?php echo site_url('admin/profile'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'profile') ? 'active' : ''; ?>">
-                    <i class="fas fa-user"></i> Profile
+                    <i class="fas fa-user-circle"></i> Profile
                 </a>
                 <a href="<?php echo site_url('admin/about'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'about') ? 'active' : ''; ?>">
-                    <i class="fas fa-info-circle"></i> About
+                    <i class="fas fa-address-card"></i> About
                 </a>
                 <a href="<?php echo site_url('admin/skills'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'skills') ? 'active' : ''; ?>">
                     <i class="fas fa-code"></i> Skills
                 </a>
                 <a href="<?php echo site_url('admin/projects'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'projects') ? 'active' : ''; ?>">
-                    <i class="fas fa-project-diagram"></i> Projects
+                    <i class="fas fa-layer-group"></i> Projects
                 </a>
                 <a href="<?php echo site_url('admin/experience'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'experience') ? 'active' : ''; ?>">
                     <i class="fas fa-briefcase"></i> Experience
@@ -33,12 +33,12 @@
                     <i class="fas fa-trophy"></i> Awards
                 </a>
                 <a href="<?php echo site_url('admin/services'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'services') ? 'active' : ''; ?>">
-                    <i class="fas fa-concierge-bell"></i> Services
+                    <i class="fas fa-toolbox"></i> Services
                 </a>
 
-                <div class="sidebar-label mt-3">Settings</div>
+                <div class="sidebar-section-label">System</div>
                 <a href="<?php echo site_url('admin/meta'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'meta') ? 'active' : ''; ?>">
-                    <i class="fas fa-cog"></i> Meta & Nav
+                    <i class="fas fa-sliders-h"></i> Settings
                 </a>
             </div>
             
@@ -55,11 +55,11 @@
                 <h1 class="page-title"><?php echo isset($title) ? $title : 'Dashboard'; ?></h1>
                 
                 <div class="user-dropdown">
-                    <a href="<?php echo site_url('admin/auth/logout'); ?>" class="btn btn-sm text-danger">
-                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                    <a href="<?php echo site_url('admin/auth/logout'); ?>" class="btn-logout">
+                        Logout
                     </a>
                 </div>
             </nav>
             
             <!-- Page Content -->
-            <div class="p-4 flex-grow-1">
+            <div class="main-content">

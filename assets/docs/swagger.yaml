@@ -1,0 +1,345 @@
+openapi: 3.0.0
+info:
+  title: Portfolio API
+  description: Professional REST API for Portfolio Content Management. Powers the Lovable/React frontend.
+  version: 1.0.0
+  contact:
+    name: ASBube
+    email: bube.dev@gmail.com
+servers:
+  - url: http://localhost/portfolio/api
+    description: Local Development Server
+
+paths:
+  /profile:
+    get:
+      summary: Get Profile Information
+      description: Returns personal details, hero text, and social links.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+
+  /about:
+    get:
+      summary: Get About Information
+      description: Returns bio text, personal statement, and core expertise features.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/About'
+
+  /skills:
+    get:
+      summary: Get Skills List
+      description: Returns a list of technical skills categorized by type.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+
+  /projects:
+    get:
+      summary: Get Projects
+      description: Returns a list of portfolio projects with tech stacks and icons.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+
+  /experience:
+    get:
+      summary: Get Experience History
+      description: Returns work experience roles with descriptions and highlights.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Experience'
+
+  /education:
+    get:
+      summary: Get Education History
+      description: Returns educational background.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Education'
+
+  /awards:
+    get:
+      summary: Get Awards
+      description: Returns list of honors and awards.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Award'
+
+  /services:
+    get:
+      summary: Get Services
+      description: Returns list of services offered to clients.
+      tags:
+        - Content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+
+  /meta:
+    get:
+      summary: Get Meta Information
+      description: Returns brand details, copyright year, and navigation links.
+      tags:
+        - System
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta'
+
+  /contact:
+    post:
+      summary: Send Contact Message
+      description: Sends an email to the admin. Requires JSON body.
+      tags:
+        - System
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - message
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: john@example.com
+                message:
+                  type: string
+                  example: I'm interested in your services.
+      responses:
+        '200':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+        '400':
+          description: Invalid Input
+        '500':
+          description: Server Error
+
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+          example: ASBube
+        title:
+          type: string
+          example: Frappe Developer
+        hero_text:
+          type: string
+        hero_subtext:
+          type: string
+        location:
+          type: string
+        status:
+          type: string
+        social_links:
+          type: object
+          properties:
+            linkedin:
+              type: string
+            github:
+              type: string
+
+    About:
+      type: object
+      properties:
+        section_label:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        about_text:
+          type: string
+        personal_statement:
+          type: string
+        features:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              icon:
+                type: string
+
+    Skill:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+          example: React
+        category:
+          type: string
+          enum: [backend, frontend, database, tools]
+        is_primary:
+          type: boolean
+        description:
+          type: string
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        impact_line:
+          type: string
+        icon:
+          type: string
+          example: Building2
+        is_featured:
+          type: boolean
+        tech_stack:
+          type: array
+          items:
+            type: string
+
+    Experience:
+      type: object
+      properties:
+        id:
+          type: integer
+        role:
+          type: string
+        company:
+          type: string
+        description:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+          nullable: true
+        highlights:
+          type: array
+          items:
+            type: string
+
+    Education:
+      type: object
+      properties:
+        degree:
+          type: string
+        field:
+          type: string
+        institution:
+          type: string
+        year:
+          type: string
+
+    Award:
+      type: object
+      properties:
+        title:
+          type: string
+        year:
+          type: string
+
+    Service:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+
+    Meta:
+      type: object
+      properties:
+        brand_name:
+          type: string
+        copyright_year:
+          type: integer
+        nav_links:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              href:
+                type: string

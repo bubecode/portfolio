@@ -33,31 +33,31 @@ INSERT INTO about_features (about_id, icon, label) VALUES
 
 -- 3. Insert SKILLS (Mapping JSON categories and items to skills table)
 -- Backend
-INSERT INTO skills (title, category, is_primary, description) VALUES
-('Frappe', 'backend', 1, 'Backend-first development with a strong focus on Frappe-based business systems.'),
-('PHP', 'backend', 0, 'Backend-first development with a strong focus on Frappe-based business systems.'),
-('CodeIgniter', 'backend', 0, 'Backend-first development with a strong focus on Frappe-based business systems.'),
-('REST APIs', 'backend', 0, 'Backend-first development with a strong focus on Frappe-based business systems.');
+INSERT INTO skills (name, title, category, is_primary, description) VALUES
+('Frappe', 'Frappe', 'backend', 1, 'Backend-first development with a strong focus on Frappe-based business systems.'),
+('PHP', 'PHP', 'backend', 0, 'Backend-first development with a strong focus on Frappe-based business systems.'),
+('CodeIgniter', 'CodeIgniter', 'backend', 0, 'Backend-first development with a strong focus on Frappe-based business systems.'),
+('REST APIs', 'REST APIs', 'backend', 0, 'Backend-first development with a strong focus on Frappe-based business systems.');
 
 -- Database
-INSERT INTO skills (title, category, is_primary, description) VALUES
-('MySQL', 'database', 0, NULL),
-('MariaDB', 'database', 0, NULL),
-('PostgreSQL', 'database', 0, NULL);
+INSERT INTO skills (name, title, category, is_primary, description) VALUES
+('MySQL', 'MySQL', 'database', 0, NULL),
+('MariaDB', 'MariaDB', 'database', 0, NULL),
+('PostgreSQL', 'PostgreSQL', 'database', 0, NULL);
 
 -- Frontend
-INSERT INTO skills (title, category, is_primary, description) VALUES
-('JavaScript', 'frontend', 0, NULL),
-('React', 'frontend', 0, NULL),
-('Tailwind', 'frontend', 0, NULL);
+INSERT INTO skills (name, title, category, is_primary, description) VALUES
+('JavaScript', 'JavaScript', 'frontend', 0, NULL),
+('React', 'React', 'frontend', 0, NULL),
+('Tailwind', 'Tailwind', 'frontend', 0, NULL);
 
 -- Tools
-INSERT INTO skills (title, category, is_primary, description) VALUES
-('Git', 'tools', 0, NULL),
-('Linux', 'tools', 0, NULL),
-('Docker', 'tools', 0, NULL),
-('VS Code', 'tools', 0, NULL),
-('Figma', 'tools', 0, NULL);
+INSERT INTO skills (name, title, category, is_primary, description) VALUES
+('Git', 'Git', 'tools', 0, NULL),
+('Linux', 'Linux', 'tools', 0, NULL),
+('Docker', 'Docker', 'tools', 0, NULL),
+('VS Code', 'VS Code', 'tools', 0, NULL),
+('Figma', 'Figma', 'tools', 0, NULL);
 
 -- 4. Insert PROJECTS
 INSERT INTO projects (name, description, impact_line, tech_stack_json, is_featured, icon) VALUES

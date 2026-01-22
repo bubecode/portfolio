@@ -20,6 +20,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		// Redirect to admin login page
+		redirect('admin/auth/login');
 	}
 }

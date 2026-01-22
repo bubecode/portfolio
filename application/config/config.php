@@ -23,7 +23,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+// Auto-detect base URL for local and remote servers
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$host = $_SERVER['HTTP_HOST'];
+$script = $_SERVER['SCRIPT_NAME'];
+$path = str_replace('\\', '/', dirname($script));
+$base_url = $protocol . $host . ($path == '/' ? '' : $path) . '/';
+$config['base_url'] = $base_url;
 
 /*
 |--------------------------------------------------------------------------
@@ -225,7 +231,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4; // Enable all logging for debugging
 
 /*
 |--------------------------------------------------------------------------
@@ -410,7 +416,9 @@ $config['sess_regenerate_destroy'] = FALSE;
 */
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
+// Auto-detect cookie path based on script path (works for both local and remote)
+$script_path = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+$config['cookie_path'] = ($script_path == '/' || $script_path == '\\') ? '/' : rtrim($script_path, '/') . '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
 $config['cookie_samesite'] 	= 'Lax';
@@ -462,7 +470,7 @@ $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
-$config['csrf_exclude_uris'] = array();
+$config['csrf_exclude_uris'] = array('admin/auth/login');
 
 /*
 |--------------------------------------------------------------------------

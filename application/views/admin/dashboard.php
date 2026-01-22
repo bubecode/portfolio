@@ -1,6 +1,6 @@
 <div class="content">
     <div class="mb-4">
-        <h2 class="h3 mb-0 text-gray-800">Overview</h2>
+        <h2 class="h3">Overview</h2>
     </div>
     
     <div class="row g-4">
@@ -69,12 +69,12 @@
         </div>
     </div>
 
-    <!-- Quick Actions / Empty State Example -->
-    <div class="card mt-4">
+    <!-- System Status Card -->
+    <div class="card" style="margin-top: 24px;">
         <div class="card-body">
-            <h5 class="card-title mb-3" style="font-size: 16px; font-weight: 600;">System Status</h5>
+            <h5 class="card-title">System Status</h5>
             <p class="text-muted mb-0">
-                <i class="fas fa-check-circle text-success me-2"></i> All systems operational. Portfolio API is online.
+                <i class="fas fa-check-circle text-success"></i> All systems operational. Portfolio API is online.
             </p>
         </div>
     </div>

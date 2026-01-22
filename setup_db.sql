@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS skills (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category VARCHAR(100),
     name VARCHAR(255),
+    title VARCHAR(255),
+    description TEXT,
     is_primary BOOLEAN DEFAULT 0
 );
 
@@ -80,6 +82,13 @@ CREATE TABLE IF NOT EXISTS awards (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255),
     year VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS stats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    years_experience VARCHAR(50),
+    projects_completed VARCHAR(50),
+    clients_served VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS services (

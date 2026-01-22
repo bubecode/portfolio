@@ -52,11 +52,16 @@
         <div id="content" class="flex-grow-1 d-flex flex-column">
             <!-- Topbar (Now inside main content) -->
             <nav class="topbar">
-                <h1 class="page-title"><?php echo isset($title) ? $title : 'Dashboard'; ?></h1>
+                <div>
+                    <h1 class="page-title"><?php echo isset($title) ? $title : 'Dashboard'; ?></h1>
+                    <?php if(isset($subtitle)): ?>
+                        <p class="page-subtitle"><?php echo $subtitle; ?></p>
+                    <?php endif; ?>
+                </div>
                 
                 <div class="user-dropdown">
                     <a href="<?php echo site_url('admin/auth/logout'); ?>" class="btn-logout">
-                        Logout
+                        <i class="fas fa-sign-out-alt me-1"></i> Logout
                     </a>
                 </div>
             </nav>

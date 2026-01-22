@@ -1,0 +1,44 @@
+# CodeIgniter
+*/config/development/
+*/config/testing/
+*/config/production/
+*/logs/log-*.php
+!*/logs/index.html
+*/cache/*
+!*/cache/index.html
+!*/cache/.htaccess
+*/sessions/*
+!*/sessions/index.html
+!*/sessions/.htaccess
+user_guide_src/build/*
+user_guide_src/cilex.phar
+user_guide_src/nbproject/*
+user_guide_src/nbproject/private/*
+
+# Environment
+.env
+.htaccess
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Composer
+vendor/
+
+
+# CI / Logs
+application/logs/*
+!application/logs/.htaccess
+
+# Cache
+application/cache/*
+!application/cache/.htaccess
+
+
+# Uploads (haddii mustaqbalka aad ku darto)
+uploads/
+

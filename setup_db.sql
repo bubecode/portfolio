@@ -1,111 +1,168 @@
+-- Database setup for Portfolio CMS
 CREATE DATABASE IF NOT EXISTS portfolio_db;
 USE portfolio_db;
 
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- Administrative Users
+CREATE TABLE IF NOT EXISTS admin_users (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'editor') DEFAULT 'admin',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (id),
+  UNIQUE KEY (username),
+  UNIQUE KEY (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Core Profile Information
 CREATE TABLE IF NOT EXISTS profile (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    title VARCHAR(255),
-    hero_text TEXT,
-    hero_subtext TEXT,
-    location VARCHAR(255),
-    timezone VARCHAR(100),
-    email VARCHAR(255),
-    status VARCHAR(50),
-    linkedin VARCHAR(255),
-    github VARCHAR(255)
-);
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  hero_text VARCHAR(255) NOT NULL,
+  tagline TEXT DEFAULT NULL,
+  location VARCHAR(100) DEFAULT NULL,
+  email VARCHAR(150) NOT NULL,
+  status VARCHAR(50) DEFAULT 'Available',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- About Section
 CREATE TABLE IF NOT EXISTS about (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    section_label VARCHAR(100),
-    title VARCHAR(255),
-    subtitle VARCHAR(255),
-    about_text TEXT,
-    personal_statement TEXT
-);
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  profile_id INT(10) UNSIGNED NOT NULL,
+  role VARCHAR(100) NOT NULL,
+  about_text TEXT NOT NULL,
+  personal_statement VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS about_features (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    about_id INT,
-    icon VARCHAR(100),
-    label VARCHAR(255),
-    FOREIGN KEY (about_id) REFERENCES about(id) ON DELETE CASCADE
-);
+-- Core Expertise (Features in About section)
+CREATE TABLE IF NOT EXISTS core_expertise (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  about_id INT(10) UNSIGNED NOT NULL,
+  expertise VARCHAR(100) NOT NULL,
+  sort_order TINYINT(3) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS skills (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    category VARCHAR(100),
-    name VARCHAR(255),
-    title VARCHAR(255),
-    description TEXT,
-    is_primary BOOLEAN DEFAULT 0
-);
+-- Social Links
+CREATE TABLE IF NOT EXISTS social_links (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  platform VARCHAR(50) NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  handle VARCHAR(100) DEFAULT NULL,
+  sort_order TINYINT(3) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS projects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    description TEXT,
-    impact_line VARCHAR(255),
-    tech_stack_json JSON,
-    is_featured BOOLEAN DEFAULT 0,
-    icon VARCHAR(100)
-);
-
-CREATE TABLE IF NOT EXISTS experience (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    role VARCHAR(255),
-    company VARCHAR(255),
-    description TEXT,
-    start_date VARCHAR(50),
-    end_date VARCHAR(50),
-    location VARCHAR(255),
-    is_featured BOOLEAN DEFAULT 0,
-    highlights_json JSON
-);
-
-CREATE TABLE IF NOT EXISTS education (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    degree VARCHAR(255),
-    field VARCHAR(255),
-    institution VARCHAR(255),
-    year VARCHAR(50)
-);
-
-CREATE TABLE IF NOT EXISTS awards (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    year VARCHAR(50)
-);
-
+-- Statistics
 CREATE TABLE IF NOT EXISTS stats (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    years_experience VARCHAR(50),
-    projects_completed VARCHAR(50),
-    clients_served VARCHAR(50)
-);
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  profile_id INT(10) UNSIGNED NOT NULL,
+  stat_key VARCHAR(50) NOT NULL,
+  stat_value VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Skills Categories
+CREATE TABLE IF NOT EXISTS skill_categories (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  sort_order TINYINT(3) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Skills
+CREATE TABLE IF NOT EXISTS skills (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  category_id INT(10) UNSIGNED NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  is_primary TINYINT(1) DEFAULT 0,
+  sort_order TINYINT(3) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Experience
+CREATE TABLE IF NOT EXISTS experience (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  role VARCHAR(100) NOT NULL,
+  company VARCHAR(100) NOT NULL,
+  description TEXT DEFAULT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE DEFAULT NULL,
+  location VARCHAR(100) DEFAULT NULL,
+  is_featured TINYINT(1) DEFAULT 0,
+  sort_order TINYINT(3) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Experience Highlights
+CREATE TABLE IF NOT EXISTS experience_highlights (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  experience_id INT(10) UNSIGNED NOT NULL,
+  highlight VARCHAR(255) NOT NULL,
+  sort_order TINYINT(3) UNSIGNED DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Projects
+CREATE TABLE IF NOT EXISTS projects (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  description TEXT DEFAULT NULL,
+  impact_line VARCHAR(150) DEFAULT NULL,
+  tech_stack_json JSON DEFAULT NULL,
+  is_featured TINYINT(1) DEFAULT 0,
+  icon VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Services
 CREATE TABLE IF NOT EXISTS services (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    description TEXT
-);
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  title VARCHAR(100) NOT NULL,
+  description TEXT DEFAULT NULL,
+  icon VARCHAR(50) DEFAULT NULL,
+  sort_order INT(11) DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Awards
+CREATE TABLE IF NOT EXISTS awards (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  title VARCHAR(100) NOT NULL,
+  organization VARCHAR(150) NOT NULL,
+  description TEXT DEFAULT NULL,
+  year YEAR(4) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Education
+CREATE TABLE IF NOT EXISTS education (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  degree VARCHAR(100) NOT NULL,
+  institution VARCHAR(150) NOT NULL,
+  year YEAR(4) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Meta Settings
 CREATE TABLE IF NOT EXISTS meta (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    brand_name VARCHAR(100),
-    copyright_year VARCHAR(10)
-);
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  brand_name VARCHAR(255) DEFAULT 'ASBube',
+  copyright_year VARCHAR(10) DEFAULT '2026',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Navigation Links
 CREATE TABLE IF NOT EXISTS nav_links (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    href VARCHAR(255),
-    order_index INT DEFAULT 0
-);
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  href VARCHAR(255) NOT NULL,
+  order_index INT(11) DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

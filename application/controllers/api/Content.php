@@ -36,7 +36,8 @@ class Content extends CI_Controller {
             'description' => isset($about->about_text) ? $about->about_text : '',
             'status' => isset($profile->status) ? $profile->status : '',
             'email' => isset($profile->email) ? $profile->email : '',
-            'location' => isset($profile->location) ? $profile->location : ''
+            'location' => isset($profile->location) ? $profile->location : '',
+            'profile_image' => !empty($profile->profile_image) ? base_url($profile->profile_image) : null
         ];
 
         // 3. Format Socials

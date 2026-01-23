@@ -33,13 +33,10 @@ class Profile extends CI_Controller {
                 'name' => $this->input->post('name', TRUE),
                 'title' => $this->input->post('title', TRUE),
                 'hero_text' => $this->input->post('hero_text', TRUE),
-                'hero_subtext' => $this->input->post('hero_subtext', TRUE),
+                'tagline' => $this->input->post('hero_subtext', TRUE),
                 'location' => $this->input->post('location', TRUE),
-                'timezone' => $this->input->post('timezone', TRUE),
                 'email' => $this->input->post('email', TRUE),
-                'status' => $this->input->post('status', TRUE),
-                'linkedin' => $this->input->post('linkedin', TRUE),
-                'github' => $this->input->post('github', TRUE)
+                'status' => $this->input->post('status', TRUE)
             );
 
             // Handle Image Upload

@@ -95,3 +95,17 @@
         </div>
     </div>
 </div>
+
+<script>
+document.querySelector('input[name="profile_image"]').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const container = document.querySelector('.profile-img-container');
+            container.innerHTML = `<img src="${event.target.result}" alt="Preview" class="img-thumbnail rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">`;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>

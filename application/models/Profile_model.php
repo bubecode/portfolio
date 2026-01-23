@@ -18,9 +18,12 @@ class Profile_model extends CI_Model {
         if ($count == 0) {
             return $this->db->insert('profile', $data);
         } else {
-            // Assume single row with ID 1
-            $this->db->where('id', 1);
-            return $this->db->update('profile', $data);
+            $profile = $this->db->get('profile', 1)->row();
+            if ($profile) {
+                $this->db->where('id', $profile->id);
+                return $this->db->update('profile', $data);
+            }
+            return FALSE;
         }
     }
 

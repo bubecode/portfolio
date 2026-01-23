@@ -42,3 +42,6 @@ application/cache/*
 # Uploads (haddii mustaqbalka aad ku darto)
 uploads/
 
+# Sensitive Config
+application/config/database.php
+

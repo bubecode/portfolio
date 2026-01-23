@@ -165,6 +165,16 @@ class Content extends API_Base_Controller {
             return $m->text;
         }, $marquee);
 
+        // Map Awards
+        $awards = array_map(function($a) {
+            return [
+                'title' => $a->title,
+                'org' => $a->organization,
+                'year' => $a->year,
+                'project' => $a->description
+            ];
+        }, $awards_raw);
+
         // Final Response
         $response = [
             'profile' => $profile_data,
@@ -176,7 +186,8 @@ class Content extends API_Base_Controller {
             'projects' => $projects,
             'education' => $education,
             'nav_links' => $navigation,
-            'marquee' => $marquee_data
+            'marquee' => $marquee_data,
+            'awards' => $awards
         ];
 
         $this->output

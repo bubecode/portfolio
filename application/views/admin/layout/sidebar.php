@@ -35,6 +35,9 @@
                 <a href="<?php echo site_url('admin/services'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'services') ? 'active' : ''; ?>">
                     <i class="fas fa-toolbox"></i> Services
                 </a>
+                <a href="<?php echo site_url('admin/testimonials'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'testimonials') ? 'active' : ''; ?>">
+                    <i class="fas fa-comments"></i> Testimonials
+                </a>
 
                 <div class="sidebar-section-label">System</div>
                 <a href="<?php echo site_url('admin/meta'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'meta') ? 'active' : ''; ?>">

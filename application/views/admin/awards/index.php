@@ -29,6 +29,10 @@
                             <label class="form-label">Year</label>
                             <input type="text" name="year" class="form-control" placeholder="e.g. 2023">
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sort Order</label>
+                            <input type="number" name="set_order" class="form-control" value="0">
+                        </div>
                         <button type="submit" class="btn btn-primary w-100">Add Award</button>
                     <?php echo form_close(); ?>
                 </div>
@@ -43,6 +47,7 @@
                                 <th>Title</th>
                                 <th>Organization</th>
                                 <th>Year</th>
+                                <th>Order</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -53,6 +58,7 @@
                                         <td><?php echo $a->title; ?></td>
                                         <td><?php echo $a->organization; ?></td>
                                         <td><?php echo $a->year; ?></td>
+                                        <td><?php echo $a->set_order; ?></td>
                                         <td>
                                             <a href="<?php echo site_url('admin/awards/edit/'.$a->id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                             <a href="<?php echo site_url('admin/awards/delete/'.$a->id); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
@@ -60,7 +66,7 @@
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <tr><td colspan="4" class="text-center">No awards found.</td></tr>
+                                <tr><td colspan="5" class="text-center">No awards found.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

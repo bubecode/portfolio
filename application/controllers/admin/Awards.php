@@ -30,7 +30,8 @@ class Awards extends CI_Controller {
                 'title' => $this->input->post('title', TRUE),
                 'organization' => $this->input->post('organization', TRUE),
                 'description' => $this->input->post('description', TRUE),
-                'year' => $this->input->post('year', TRUE)
+                'year' => $this->input->post('year', TRUE),
+                'set_order' => (int)$this->input->post('set_order', TRUE)
             );
             $this->Award_model->add_award($data);
             $this->session->set_flashdata('success', 'Award added.');
@@ -60,7 +61,8 @@ class Awards extends CI_Controller {
                 'title' => $this->input->post('title', TRUE),
                 'organization' => $this->input->post('organization', TRUE),
                 'description' => $this->input->post('description', TRUE),
-                'year' => $this->input->post('year', TRUE)
+                'year' => $this->input->post('year', TRUE),
+                'set_order' => (int)$this->input->post('set_order', TRUE)
             );
             $this->Award_model->update_award($id, $data);
             $this->session->set_flashdata('success', 'Award updated.');

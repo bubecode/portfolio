@@ -25,6 +25,10 @@
                     <label class="form-label">Year</label>
                     <input type="text" name="year" class="form-control" value="<?php echo $award->year; ?>" placeholder="e.g. 2023">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Sort Order</label>
+                    <input type="number" name="set_order" class="form-control" value="<?php echo $award->set_order; ?>">
+                </div>
                 <button type="submit" class="btn btn-primary">Update Award</button>
             <?php echo form_close(); ?>
         </div>

@@ -8,7 +8,7 @@ class Award_model extends CI_Model {
     }
 
     public function get_all_awards() {
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('set_order', 'ASC');
         return $this->db->get('awards')->result();
     }
 

@@ -113,7 +113,7 @@ class Content extends API_Base_Controller {
                 'company' => $e->company,
                 'period' => $period,
                 'location' => $e->location,
-                'featured' => (bool)$e->featured,
+                'featured' => (bool)(isset($e->featured) ? $e->featured : (isset($e->is_featured) ? $e->is_featured : false)),
                 'highlights' => $highlights
             ];
         }, $experience_raw);
@@ -175,6 +175,23 @@ class Content extends API_Base_Controller {
             ];
         }, $awards_raw);
 
+        // Map Testimonials
+        $testimonials_raw = $this->db->where('status', 'active')->order_by('created_at', 'DESC')->get('testimonials')->result();
+        $testimonials = array_map(function($t) {
+            return [
+                'id' => (int)$t->id,
+                'person' => $t->person_name,
+                'role' => $t->person_role,
+                'company' => $t->company_name,
+                'product' => $t->product_used,
+                'message' => $t->message,
+                'rating' => (int)$t->rating,
+                'image' => $t->person_image ? base_url($t->person_image) : null,
+                'logo' => $t->company_logo ? base_url($t->company_logo) : null,
+                'featured' => (bool)$t->is_featured
+            ];
+        }, $testimonials_raw);
+
         // Final Response
         $response = [
             'profile' => $profile_data,
@@ -187,7 +204,8 @@ class Content extends API_Base_Controller {
             'education' => $education,
             'nav_links' => $navigation,
             'marquee' => $marquee_data,
-            'awards' => $awards
+            'awards' => $awards,
+            'testimonials' => $testimonials
         ];
 
         $this->output

@@ -38,7 +38,10 @@
 
                 <div class="sidebar-section-label">System</div>
                 <a href="<?php echo site_url('admin/meta'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'meta') ? 'active' : ''; ?>">
-                    <i class="fas fa-sliders-h"></i> Settings
+                    <i class="fas fa-sliders-h"></i> General Settings
+                </a>
+                <a href="<?php echo site_url('admin/settings'); ?>" class="nav-link <?php echo ($this->uri->segment(2) == 'settings') ? 'active' : ''; ?>">
+                    <i class="fas fa-shield-halved"></i> Account Security
                 </a>
             </div>
             
@@ -60,6 +63,12 @@
                 </div>
                 
                 <div class="user-dropdown">
+                    <a href="<?php echo site_url('admin/profile'); ?>" class="btn-topbar me-2">
+                        <i class="fas fa-user-circle"></i> Profile
+                    </a>
+                    <a href="<?php echo site_url('admin/settings'); ?>" class="btn-topbar me-2">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
                     <a href="<?php echo site_url('admin/auth/logout'); ?>" class="btn-logout">
                         <i class="fas fa-sign-out-alt me-1"></i> Logout
                     </a>

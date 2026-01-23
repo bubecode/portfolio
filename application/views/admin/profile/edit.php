@@ -9,9 +9,27 @@
 
     <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
-    <div class="card">
-        <div class="card-body">
-            <?php echo form_open('admin/profile/update'); ?>
+            <?php if($this->session->flashdata('error')): ?>
+                <div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
+            <?php endif; ?>
+
+            <?php echo form_open_multipart('admin/profile/update'); ?>
+                <div class="mb-4 text-center">
+                    <div class="profile-img-container mb-3">
+                        <?php if(!empty($profile->profile_image)): ?>
+                            <img src="<?php echo base_url($profile->profile_image); ?>" alt="Profile" class="img-thumbnail rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                        <?php else: ?>
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 150px; height: 150px; border: 2px dashed #ccc;">
+                                <i class="fas fa-user fa-4x text-muted"></i>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="mx-auto" style="max-width: 300px;">
+                        <label class="form-label">Profile Picture</label>
+                        <input type="file" name="profile_image" class="form-control">
+                        <small class="text-muted">Recommended: Square image, max 2MB</small>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Full Name</label>

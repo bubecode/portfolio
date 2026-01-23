@@ -19,4 +19,12 @@ class User_model extends CI_Model {
         );
         return $this->db->insert('users', $data);
     }
+
+    public function update_password($id, $new_password) {
+        $data = array(
+            'password_hash' => password_hash($new_password, PASSWORD_BCRYPT)
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
 }

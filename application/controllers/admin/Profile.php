@@ -9,6 +9,7 @@ class Profile extends CI_Controller {
             redirect('admin/auth/login');
         }
         $this->load->model('Profile_model');
+        $this->load->library('upload');
     }
 
     public function index() {
@@ -28,12 +29,6 @@ class Profile extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $this->index();
         } else {
-            $data = $this->input->post();
-            // Remove submit button or csrf token if present in post array implicitly, 
-            // though CI3 Input class usually cleans up. 
-            // Better to explicitly define fields or unset unwanted.
-            
-            // Basic XSS clean is enabled globally or via input->post(NULL, TRUE)
             $update_data = array(
                 'name' => $this->input->post('name', TRUE),
                 'title' => $this->input->post('title', TRUE),
@@ -46,6 +41,24 @@ class Profile extends CI_Controller {
                 'linkedin' => $this->input->post('linkedin', TRUE),
                 'github' => $this->input->post('github', TRUE)
             );
+
+            // Handle Image Upload
+            if (!empty($_FILES['profile_image']['name'])) {
+                $config['upload_path']   = './uploads/profile/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']      = 2048;
+                $config['file_name']     = 'profile_' . time();
+
+                $this->upload->initialize($config);
+
+                if ($this->upload->do_upload('profile_image')) {
+                    $uploadData = $this->upload->data();
+                    $update_data['profile_image'] = 'uploads/profile/' . $uploadData['file_name'];
+                } else {
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    redirect('admin/profile');
+                }
+            }
 
             $this->Profile_model->update_profile($update_data);
             $this->session->set_flashdata('success', 'Profile updated successfully!');

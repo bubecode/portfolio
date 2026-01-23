@@ -57,6 +57,24 @@
 
 /*
  *---------------------------------------------------------------
+ * LOAD DOTENV
+ *---------------------------------------------------------------
+ */
+if (file_exists('.env')) {
+	$lines = file('.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	foreach ($lines as $line) {
+		if (strpos(trim($line), '#') === 0) continue;
+		$parts = explode('=', $line, 2);
+		if (count($parts) === 2) {
+			putenv(trim($parts[0]) . '=' . trim($parts[1]));
+			$_ENV[trim($parts[0])] = trim($parts[1]);
+			$_SERVER[trim($parts[0])] = trim($parts[1]);
+		}
+	}
+}
+
+/*
+ *---------------------------------------------------------------
  * ERROR REPORTING
  *---------------------------------------------------------------
  *

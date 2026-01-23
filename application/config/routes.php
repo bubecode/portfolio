@@ -67,5 +67,5 @@ $route['api/education'] = 'api/education/index';
 $route['api/awards'] = 'api/awards/index';
 $route['api/services'] = 'api/services/index';
 $route['api/meta'] = 'api/meta/index';
-$route['api/contact'] = 'api/contact/index';
+$route['api/v1/contact']['post'] = 'api/contact';
 $route['api/v1/content'] = 'api/content/index';

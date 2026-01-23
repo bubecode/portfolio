@@ -15,7 +15,7 @@ class Projects extends API_Base_Controller {
         // Decode JSON fields for clean API output
         foreach ($projects as &$p) {
             $p->tech_stack = json_decode($p->tech_stack_json);
-            $p->is_featured = (bool)$p->is_featured;
+            $p->featured = (bool)$p->featured;
             unset($p->tech_stack_json);
         }
 

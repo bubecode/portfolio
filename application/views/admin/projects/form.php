@@ -11,8 +11,8 @@
             <?php echo form_open('admin/projects/save/' . (isset($project) ? $project->id : '')); ?>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Project Name</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo isset($project) ? $project->name : ''; ?>" required>
+                        <label class="form-label">Project Title</label>
+                        <input type="text" name="title" class="form-control" value="<?php echo isset($project) ? $project->title : ''; ?>" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Icon Class (e.g. fas fa-code)</label>
@@ -26,8 +26,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Impact Line</label>
-                    <input type="text" name="impact_line" class="form-control" value="<?php echo isset($project) ? $project->impact_line : ''; ?>">
+                    <label class="form-label">Impact Stat/Line</label>
+                    <input type="text" name="impact" class="form-control" value="<?php echo isset($project) ? $project->impact : ''; ?>">
                 </div>
 
                 <div class="mb-3">
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="mb-3 form-check">
-                    <input type="checkbox" name="is_featured" class="form-check-input" id="isFeatured" <?php echo (isset($project) && $project->is_featured) ? 'checked' : ''; ?>>
+                    <input type="checkbox" name="featured" class="form-check-input" id="isFeatured" <?php echo (isset($project) && $project->featured) ? 'checked' : ''; ?>>
                     <label class="form-check-label" for="isFeatured">Mark as Featured Project</label>
                 </div>
 

@@ -25,7 +25,7 @@ class Meta_model extends CI_Model {
 
     // Navigation Links
     public function get_nav_links() {
-        $this->db->order_by('order_index', 'ASC');
+        $this->db->order_by('sort_order', 'ASC');
         return $this->db->get('nav_links')->result();
     }
 
@@ -51,5 +51,20 @@ class Meta_model extends CI_Model {
     public function delete_social_link($id) {
         $this->db->where('id', $id);
         return $this->db->delete('social_links');
+    }
+
+    // Marquee
+    public function get_marquee() {
+        $this->db->order_by('sort_order', 'ASC');
+        return $this->db->get('marquee')->result();
+    }
+
+    public function add_marquee($data) {
+        return $this->db->insert('marquee', $data);
+    }
+
+    public function delete_marquee($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete('marquee');
     }
 }

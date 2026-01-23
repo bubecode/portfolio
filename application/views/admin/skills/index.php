@@ -25,6 +25,10 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description (Optional)</label>
+                            <input type="text" name="description" class="form-control" placeholder="e.g. Backend-first development">
+                        </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" name="is_primary" class="form-check-input" id="isPrimary">
                             <label class="form-check-label" for="isPrimary">Is Primary Skill?</label>
@@ -45,6 +49,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Category</th>
+                                    <th>Description</th>
                                     <th>Primary</th>
                                     <th>Action</th>
                                 </tr>
@@ -55,6 +60,7 @@
                                         <tr>
                                             <td><?php echo $skill->name; ?></td>
                                             <td><span class="badge bg-secondary"><?php echo ucfirst($skill->category_name); ?></span></td>
+                                            <td><small class="text-muted"><?php echo $skill->description; ?></small></td>
                                             <td><?php echo ($skill->is_primary) ? '<i class="fas fa-check text-success"></i>' : '-'; ?></td>
                                             <td>
                                                 <a href="<?php echo site_url('admin/skills/delete/'.$skill->id); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
@@ -62,7 +68,7 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr><td colspan="4" class="text-center">No skills added yet.</td></tr>
+                                    <tr><td colspan="5" class="text-center">No skills added yet.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>

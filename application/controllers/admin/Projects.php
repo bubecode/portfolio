@@ -41,7 +41,7 @@ class Projects extends CI_Controller {
     }
 
     public function save($id = NULL) {
-        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
         
         if ($this->form_validation->run() === FALSE) {
             $id ? $this->edit($id) : $this->create();
@@ -51,11 +51,11 @@ class Projects extends CI_Controller {
             $tech_stack_array = array_map('trim', explode(',', $tech_stack_str));
             
             $data = array(
-                'name' => $this->input->post('name', TRUE),
+                'title' => $this->input->post('title', TRUE),
                 'description' => $this->input->post('description', TRUE),
-                'impact_line' => $this->input->post('impact_line', TRUE),
+                'impact' => $this->input->post('impact', TRUE),
                 'tech_stack_json' => json_encode($tech_stack_array),
-                'is_featured' => $this->input->post('is_featured') ? 1 : 0,
+                'featured' => $this->input->post('featured') ? 1 : 0,
                 'icon' => $this->input->post('icon', TRUE)
             );
 

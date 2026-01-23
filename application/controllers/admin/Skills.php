@@ -27,6 +27,7 @@ class Skills extends CI_Controller {
         $data = array(
             'name' => $this->input->post('name', TRUE),
             'category_id' => $this->input->post('category_id', TRUE),
+            'description' => $this->input->post('description', TRUE),
             'is_primary' => $this->input->post('is_primary') ? 1 : 0
         );
         $this->Skill_model->add_skill($data);

@@ -23,7 +23,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Personal Statement</label>
-                            <textarea name="personal_statement" class="form-control" rows="3"><?php echo isset($about->personal_statement) ? $about->personal_statement : ''; ?></textarea>
+                            <textarea name="personal_statement" class="form-control" rows="2"><?php echo isset($about->personal_statement) ? $about->personal_statement : ''; ?></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Professional Quote</label>
+                            <textarea name="quote" class="form-control" rows="2" placeholder="e.g. I approach software as systems..."><?php echo isset($about->quote) ? $about->quote : ''; ?></textarea>
                         </div>
                         
                         <hr>

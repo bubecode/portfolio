@@ -28,6 +28,11 @@ class Content extends API_Base_Controller {
         $experience_raw = $this->Experience_model->get_all_experience();
         $projects_raw = $this->Project_model->get_all_projects();
         $awards_raw = $this->Award_model->get_all_awards();
+        
+        // New tables
+        $education_raw = $this->db->get('education')->result();
+        $nav_links = $this->db->order_by('sort_order', 'ASC')->get('nav_links')->result();
+        $marquee = $this->db->order_by('sort_order', 'ASC')->get('marquee')->result();
 
         // 2. Format Profile
         $profile_data = [
@@ -66,12 +71,13 @@ class Content extends API_Base_Controller {
             'expertise' => isset($about->role) ? $about->role : '',
             'subtitle' => isset($about->personal_statement) ? $about->personal_statement : '',
             'bio' => isset($about->about_text) ? $about->about_text : '',
+            'quote' => isset($about->quote) ? $about->quote : '',
             'features' => array_map(function($e) { return $e->expertise; }, $expertise_raw)
         ];
 
         // 6. Format Skills
         $skills = [
-            'backend' => ['primary' => '', 'others' => []],
+            'backend' => ['primary' => '', 'others' => [], 'description' => ''],
             'database' => [],
             'frontend' => [],
             'tools' => []
@@ -79,8 +85,12 @@ class Content extends API_Base_Controller {
         foreach ($skills_raw as $sk) {
             $cat = strtolower($sk->category);
             if ($cat == 'backend') {
-                if ($sk->is_primary) $skills['backend']['primary'] = $sk->name;
-                else $skills['backend']['others'][] = $sk->name;
+                if ($sk->is_primary) {
+                    $skills['backend']['primary'] = $sk->name;
+                    if ($sk->description) $skills['backend']['description'] = $sk->description;
+                } else {
+                    $skills['backend']['others'][] = $sk->name;
+                }
             } elseif (isset($skills[$cat])) {
                 $skills[$cat][] = $sk->name;
             }
@@ -93,12 +103,18 @@ class Content extends API_Base_Controller {
             if ($start == $end) $period = $start;
             else $period = "$start - $end";
 
+            // Fetch highlights for this experience
+            $highlights_raw = $this->Experience_model->get_highlights($e->id);
+            $highlights = array_map(function($h) { return $h->highlight; }, $highlights_raw);
+
             return [
+                'id' => (int)$e->id,
                 'title' => $e->role,
                 'company' => $e->company,
                 'period' => $period,
                 'location' => $e->location,
-                'featured' => (bool)$e->is_featured
+                'featured' => (bool)$e->featured,
+                'highlights' => $highlights
             ];
         }, $experience_raw);
 
@@ -110,38 +126,44 @@ class Content extends API_Base_Controller {
         foreach ($projects_raw as $p) {
             $tech_stack = $p->tech_stack_json ? json_decode($p->tech_stack_json, true) : [];
             $project_item = [
-                'title' => $p->name,
-                'subtitle' => $p->impact_line,
-                'tech' => $tech_stack
+                'id' => (int)$p->id,
+                'title' => $p->title,
+                'description' => $p->description,
+                'impact' => $p->impact,
+                'tech' => $tech_stack,
+                'featured' => (bool)$p->featured,
+                'icon' => $p->icon
             ];
             
-            if ($p->is_featured && empty($projects['featured'])) {
+            if ($p->featured && empty($projects['featured'])) {
                 $projects['featured'] = $project_item;
             } else {
                 $projects['others'][] = $project_item;
             }
         }
 
-        // 9. Format Awards
-        $awards = array_map(function($a) {
+        // 9. Format Education
+        $education = array_map(function($ed) {
             return [
-                'title' => $a->title,
-                'org' => $a->organization,
-                'year' => $a->year,
-                'description' => $a->description
+                'id' => (int)$ed->id,
+                'degree' => $ed->degree,
+                'institution' => $ed->institution,
+                'period' => $ed->period ? $ed->period : $ed->year
             ];
-        }, $awards_raw);
+        }, $education_raw);
 
-        // Map Awards to match user's special case for "project"
-        $awards = array_map(function($a) {
-            $data = [
-                'title' => $a['title'],
-                'org' => $a['org'],
-                'year' => $a['year']
+        // Map Nav Links
+        $navigation = array_map(function($n) {
+            return [
+                'name' => $n->name,
+                'href' => $n->href
             ];
-            if ($a['description']) $data['project'] = $a['description']; // User example showed "project" field
-            return $data;
-        }, $awards);
+        }, $nav_links);
+
+        // Map Marquee
+        $marquee_data = array_map(function($m) {
+            return $m->text;
+        }, $marquee);
 
         // Final Response
         $response = [
@@ -152,7 +174,9 @@ class Content extends API_Base_Controller {
             'skills' => $skills,
             'experience' => $experience,
             'projects' => $projects,
-            'awards' => $awards
+            'education' => $education,
+            'nav_links' => $navigation,
+            'marquee' => $marquee_data
         ];
 
         $this->output

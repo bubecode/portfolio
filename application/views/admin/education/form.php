@@ -22,8 +22,8 @@
                     <input type="text" name="institution" class="form-control" value="<?php echo isset($item) ? $item->institution : ''; ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Year / Duration</label>
-                    <input type="text" name="year" class="form-control" value="<?php echo isset($item) ? $item->year : ''; ?>" placeholder="e.g. 2018 - 2022">
+                    <label class="form-label">Period / Duration</label>
+                    <input type="text" name="period" class="form-control" value="<?php echo isset($item) ? $item->period : ''; ?>" placeholder="e.g. 2020 - 2024">
                 </div>
                 <button type="submit" class="btn btn-primary">Save Education</button>
             <?php echo form_close(); ?>

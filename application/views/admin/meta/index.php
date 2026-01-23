@@ -42,7 +42,7 @@
                                 <input type="text" name="href" class="form-control" placeholder="Link (e.g. #home)" required>
                             </div>
                             <div class="col-auto">
-                                <input type="number" name="order_index" class="form-control" placeholder="Order" value="0" style="width: 70px;">
+                                <input type="number" name="sort_order" class="form-control" placeholder="Order" value="0" style="width: 70px;">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success btn-sm w-100 mb-3">Add Link</button>
@@ -53,7 +53,7 @@
                             <?php foreach($nav_links as $link): ?>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span><?php echo $link->name; ?> <small class="text-muted">(<?php echo $link->href; ?>)</small></span>
-                                    <span class="badge bg-secondary rounded-pill me-2"><?php echo $link->order_index; ?></span>
+                                    <span class="badge bg-secondary rounded-pill me-2"><?php echo $link->sort_order; ?></span>
                                     <a href="<?php echo site_url('admin/meta/delete_nav/'.$link->id); ?>" class="text-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
                                 </li>
                             <?php endforeach; ?>
@@ -66,20 +66,17 @@
         </div>
 
         <!-- Social Links -->
-        <div class="col-md-12 mb-4">
-            <div class="card">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-header">Social Links</div>
                 <div class="card-body">
                     <?php echo form_open('admin/meta/add_social'); ?>
                         <div class="row g-2 mb-3">
                             <div class="col">
-                                <input type="text" name="platform" class="form-control" placeholder="Platform (e.g. LinkedIn)" required>
+                                <input type="text" name="platform" class="form-control" placeholder="Platform" required>
                             </div>
                             <div class="col">
                                 <input type="text" name="url" class="form-control" placeholder="URL" required>
-                            </div>
-                            <div class="col">
-                                <input type="text" name="handle" class="form-control" placeholder="Handle (e.g. @user)">
                             </div>
                             <div class="col-auto">
                                 <input type="number" name="sort_order" class="form-control" placeholder="Order" value="0" style="width: 70px;">
@@ -92,13 +89,49 @@
                         <?php if(!empty($social_links)): ?>
                             <?php foreach($social_links as $link): ?>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span><strong><?php echo $link->platform; ?></strong> <small class="text-muted">(<?php echo $link->url; ?>)</small></span>
-                                    <span class="badge bg-secondary rounded-pill me-2"><?php echo $link->sort_order; ?></span>
-                                    <a href="<?php echo site_url('admin/meta/delete_social/'.$link->id); ?>" class="text-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
+                                    <span><strong><?php echo $link->platform; ?></strong></span>
+                                    <div>
+                                        <span class="badge bg-secondary rounded-pill me-2"><?php echo $link->sort_order; ?></span>
+                                        <a href="<?php echo site_url('admin/meta/delete_social/'.$link->id); ?>" class="text-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marquee Text -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">Marquee Text</div>
+                <div class="card-body">
+                    <?php echo form_open('admin/meta/add_marquee'); ?>
+                        <div class="row g-2 mb-3">
+                            <div class="col">
+                                <input type="text" name="text" class="form-control" placeholder="Marquee Text (e.g. Frappe Developer)" required>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" name="sort_order" class="form-control" placeholder="Order" value="0" style="width: 70px;">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm w-100 mb-3">Add Marquee Item</button>
+                    <?php echo form_close(); ?>
+
+                    <ul class="list-group">
+                        <?php if(!empty($marquee)): ?>
+                            <?php foreach($marquee as $m): ?>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><?php echo $m->text; ?></span>
+                                    <div>
+                                        <span class="badge bg-secondary rounded-pill me-2"><?php echo $m->sort_order; ?></span>
+                                        <a href="<?php echo site_url('admin/meta/delete_marquee/'.$m->id); ?>" class="text-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
+                                    </div>
                                 </li>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <li class="list-group-item text-muted">No social links added.</li>
+                            <li class="list-group-item text-muted">No marquee text added.</li>
                         <?php endif; ?>
                     </ul>
                 </div>

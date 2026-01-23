@@ -8,7 +8,7 @@ class Project_model extends CI_Model {
     }
 
     public function get_all_projects() {
-        $this->db->order_by('is_featured', 'DESC');
+        $this->db->order_by('featured', 'DESC');
         return $this->db->get('projects')->result();
     }
 

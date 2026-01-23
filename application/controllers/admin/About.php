@@ -34,7 +34,8 @@ class About extends CI_Controller {
             'role' => $this->input->post('role', TRUE),
             'about_text' => $this->input->post('about_text', TRUE),
             'personal_statement' => $this->input->post('personal_statement', TRUE),
-            'profile_id' => 1 // Hardcoded for now as per logic
+            'quote' => $this->input->post('quote', TRUE),
+            'profile_id' => 1
         );
 
         $about_id = $this->About_model->update_about($data);

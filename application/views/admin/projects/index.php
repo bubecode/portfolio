@@ -14,7 +14,7 @@
                 <table class="table table-striped align-middle">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Title</th>
                             <th>Description</th>
                             <th>Featured</th>
                             <th>Action</th>
@@ -24,9 +24,9 @@
                         <?php if(!empty($projects)): ?>
                             <?php foreach($projects as $p): ?>
                                 <tr>
-                                    <td><?php echo $p->name; ?></td>
+                                    <td><?php echo $p->title; ?></td>
                                     <td><?php echo word_limiter($p->description, 10); ?></td>
-                                    <td><?php echo ($p->is_featured) ? '<i class="fas fa-star text-warning"></i>' : '-'; ?></td>
+                                    <td><?php echo ($p->featured) ? '<i class="fas fa-star text-warning"></i>' : '-'; ?></td>
                                     <td>
                                         <a href="<?php echo site_url('admin/projects/edit/'.$p->id); ?>" class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i></a>
                                         <a href="<?php echo site_url('admin/projects/delete/'.$p->id); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>

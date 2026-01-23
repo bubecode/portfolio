@@ -13,8 +13,10 @@ class Experience extends API_Base_Controller {
         $experience = $this->Experience_model->get_all_experience();
         
         foreach ($experience as &$e) {
-            $e->highlights = $this->Experience_model->get_highlights($e->id);
-            $e->is_featured = (bool)$e->is_featured;
+            $highlights_raw = $this->Experience_model->get_highlights($e->id);
+            $e->highlights = array_map(function($h) { return $h->highlight; }, $highlights_raw);
+            $e->featured = (bool)$e->is_featured;
+            unset($e->is_featured);
         }
 
         $this->output

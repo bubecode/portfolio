@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="mb-3 form-check">
-                    <input type="checkbox" name="is_featured" class="form-check-input" id="isFeatured" <?php echo (isset($item) && $item->is_featured) ? 'checked' : ''; ?>>
+                    <input type="checkbox" name="featured" class="form-check-input" id="isFeatured" <?php echo (isset($item) && $item->featured) ? 'checked' : ''; ?>>
                     <label class="form-check-label" for="isFeatured">Featured Role?</label>
                 </div>
 

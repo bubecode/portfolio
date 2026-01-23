@@ -59,7 +59,7 @@ class Experience extends CI_Controller {
                 'start_date' => $this->input->post('start_date', TRUE),
                 'end_date' => $this->input->post('end_date', TRUE),
                 'location' => $this->input->post('location', TRUE),
-                'is_featured' => $this->input->post('is_featured') ? 1 : 0,
+                'featured' => $this->input->post('featured') ? 1 : 0,
                 'highlights_json' => json_encode(array_values($highlights_array))
             );
 

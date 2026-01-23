@@ -15,8 +15,8 @@ class Experience extends API_Base_Controller {
         foreach ($experience as &$e) {
             $highlights_raw = $this->Experience_model->get_highlights($e->id);
             $e->highlights = array_map(function($h) { return $h->highlight; }, $highlights_raw);
-            $e->featured = (bool)$e->is_featured;
-            unset($e->is_featured);
+            $e->featured = (bool)$e->featured;
+            // No need to unset anymore since DB name matches output name
         }
 
         $this->output

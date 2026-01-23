@@ -23,4 +23,8 @@ class Profile_model extends CI_Model {
             return $this->db->update('profile', $data);
         }
     }
+
+    public function get_stats() {
+        return $this->db->get('stats')->result();
+    }
 }

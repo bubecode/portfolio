@@ -7,9 +7,18 @@ class Skill_model extends CI_Model {
         parent::__construct();
     }
 
+    public function get_categories() {
+        $this->db->order_by('sort_order', 'ASC');
+        return $this->db->get('skill_categories')->result();
+    }
+
     public function get_all_skills() {
-        $this->db->order_by('category', 'ASC');
-        return $this->db->get('skills')->result();
+        $this->db->select('skills.*, skill_categories.name as category_name, skills.name as title, skill_categories.name as category');
+        $this->db->from('skills');
+        $this->db->join('skill_categories', 'skill_categories.id = skills.category_id', 'left');
+        $this->db->order_by('skill_categories.sort_order', 'ASC');
+        $this->db->order_by('skills.sort_order', 'ASC');
+        return $this->db->get()->result();
     }
 
     public function get_skill($id) {

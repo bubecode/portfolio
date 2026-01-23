@@ -7,6 +7,7 @@ class Meta_model extends CI_Model {
         parent::__construct();
     }
 
+    // Meta Settings
     public function get_meta() {
         $query = $this->db->get('meta');
         return $query->row();
@@ -22,6 +23,7 @@ class Meta_model extends CI_Model {
         }
     }
 
+    // Navigation Links
     public function get_nav_links() {
         $this->db->order_by('order_index', 'ASC');
         return $this->db->get('nav_links')->result();
@@ -34,5 +36,20 @@ class Meta_model extends CI_Model {
     public function delete_nav_link($id) {
         $this->db->where('id', $id);
         return $this->db->delete('nav_links');
+    }
+
+    // Social Links
+    public function get_social_links() {
+        $this->db->order_by('sort_order', 'ASC');
+        return $this->db->get('social_links')->result();
+    }
+
+    public function add_social_link($data) {
+        return $this->db->insert('social_links', $data);
+    }
+
+    public function delete_social_link($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete('social_links');
     }
 }

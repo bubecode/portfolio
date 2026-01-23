@@ -23,13 +23,49 @@ class Awards extends CI_Controller {
 
     public function add() {
         $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('organization', 'Organization', 'required');
         
         if ($this->form_validation->run() !== FALSE) {
-            $data = $this->input->post();
+            $data = array(
+                'title' => $this->input->post('title', TRUE),
+                'organization' => $this->input->post('organization', TRUE),
+                'description' => $this->input->post('description', TRUE),
+                'year' => $this->input->post('year', TRUE)
+            );
             $this->Award_model->add_award($data);
             $this->session->set_flashdata('success', 'Award added.');
         }
         redirect('admin/awards');
+    }
+
+    public function edit($id) {
+        $data['title'] = 'Edit Award';
+        $data['award'] = $this->Award_model->get_award($id);
+        if (!$data['award']) show_404();
+
+        $this->load->view('admin/layout/header', $data);
+        $this->load->view('admin/layout/sidebar');
+        $this->load->view('admin/awards/edit_award', $data);
+        $this->load->view('admin/layout/footer');
+    }
+
+    public function update($id) {
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('organization', 'Organization', 'required');
+        
+        if ($this->form_validation->run() === FALSE) {
+            $this->edit($id);
+        } else {
+            $data = array(
+                'title' => $this->input->post('title', TRUE),
+                'organization' => $this->input->post('organization', TRUE),
+                'description' => $this->input->post('description', TRUE),
+                'year' => $this->input->post('year', TRUE)
+            );
+            $this->Award_model->update_award($id, $data);
+            $this->session->set_flashdata('success', 'Award updated.');
+            redirect('admin/awards');
+        }
     }
 
     public function delete($id) {

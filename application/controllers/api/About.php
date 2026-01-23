@@ -13,9 +13,9 @@ class About extends CI_Controller {
         
         $response = [];
         if($about) {
-            $features = $this->About_model->get_features($about->id);
+            $expertise = $this->About_model->get_expertise($about->id);
             $response = (array)$about;
-            $response['features'] = $features;
+            $response['features'] = $expertise;
         }
 
         $this->output

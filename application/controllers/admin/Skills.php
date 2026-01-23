@@ -15,6 +15,7 @@ class Skills extends CI_Controller {
     public function index() {
         $data['title'] = 'Manage Skills';
         $data['skills'] = $this->Skill_model->get_all_skills();
+        $data['categories'] = $this->Skill_model->get_categories();
         
         $this->load->view('admin/layout/header', $data);
         $this->load->view('admin/layout/sidebar');
@@ -24,8 +25,8 @@ class Skills extends CI_Controller {
 
     public function add() {
         $data = array(
-            'title' => $this->input->post('title', TRUE),
-            'category' => $this->input->post('category', TRUE),
+            'name' => $this->input->post('name', TRUE),
+            'category_id' => $this->input->post('category_id', TRUE),
             'is_primary' => $this->input->post('is_primary') ? 1 : 0
         );
         $this->Skill_model->add_skill($data);

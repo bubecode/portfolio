@@ -12,9 +12,8 @@ class Experience extends CI_Controller {
         $experience = $this->Experience_model->get_all_experience();
         
         foreach ($experience as &$e) {
-            $e->highlights = json_decode($e->highlights_json);
+            $e->highlights = $this->Experience_model->get_highlights($e->id);
             $e->is_featured = (bool)$e->is_featured;
-            unset($e->highlights_json);
         }
 
         $this->output

@@ -29,6 +29,12 @@ class Experience_model extends CI_Model {
         return $this->db->update('experience', $data);
     }
 
+    public function get_highlights($experience_id) {
+        $this->db->where('experience_id', $experience_id);
+        $this->db->order_by('sort_order', 'ASC');
+        return $this->db->get('experience_highlights')->result();
+    }
+
     public function delete_experience($id) {
         $this->db->where('id', $id);
         return $this->db->delete('experience');

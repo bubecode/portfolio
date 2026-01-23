@@ -15,6 +15,7 @@ class Meta extends CI_Controller {
         $data['title'] = 'Manage Meta & Navigation';
         $data['meta'] = $this->Meta_model->get_meta();
         $data['nav_links'] = $this->Meta_model->get_nav_links();
+        $data['social_links'] = $this->Meta_model->get_social_links();
         
         $this->load->view('admin/layout/header', $data);
         $this->load->view('admin/layout/sidebar');
@@ -37,7 +38,11 @@ class Meta extends CI_Controller {
         $this->form_validation->set_rules('href', 'Link', 'required');
         
         if ($this->form_validation->run() !== FALSE) {
-            $data = $this->input->post();
+            $data = array(
+                'name' => $this->input->post('name', TRUE),
+                'href' => $this->input->post('href', TRUE),
+                'order_index' => $this->input->post('order_index', TRUE)
+            );
             $this->Meta_model->add_nav_link($data);
             $this->session->set_flashdata('success', 'Nav link added.');
         }
@@ -47,6 +52,24 @@ class Meta extends CI_Controller {
     public function delete_nav($id) {
         $this->Meta_model->delete_nav_link($id);
         $this->session->set_flashdata('success', 'Nav link deleted.');
+        redirect('admin/meta');
+    }
+
+    public function add_social() {
+        $this->form_validation->set_rules('platform', 'Platform', 'required');
+        $this->form_validation->set_rules('url', 'URL', 'required');
+        
+        if ($this->form_validation->run() !== FALSE) {
+            $data = $this->input->post();
+            $this->Meta_model->add_social_link($data);
+            $this->session->set_flashdata('success', 'Social link added.');
+        }
+        redirect('admin/meta');
+    }
+
+    public function delete_social($id) {
+        $this->Meta_model->delete_social_link($id);
+        $this->session->set_flashdata('success', 'Social link deleted.');
         redirect('admin/meta');
     }
 }

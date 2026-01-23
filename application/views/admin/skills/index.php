@@ -14,17 +14,15 @@
                 <div class="card-body">
                     <?php echo form_open('admin/skills/add'); ?>
                         <div class="mb-3">
-                            <label class="form-label">Skill Title</label>
-                            <input type="text" name="title" class="form-control" required>
+                            <label class="form-label">Skill Name</label>
+                            <input type="text" name="name" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Category</label>
-                            <select name="category" class="form-control">
-                                <option value="frontend">Frontend</option>
-                                <option value="backend">Backend</option>
-                                <option value="database">Database</option>
-                                <option value="tools">Tools / DevOps</option>
-                                <option value="other">Other</option>
+                            <select name="category_id" class="form-control">
+                                <?php foreach($categories as $category): ?>
+                                    <option value="<?php echo $category->id; ?>"><?php echo $category->name; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="mb-3 form-check">
@@ -45,7 +43,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Title</th>
+                                    <th>Name</th>
                                     <th>Category</th>
                                     <th>Primary</th>
                                     <th>Action</th>
@@ -55,8 +53,8 @@
                                 <?php if(!empty($skills)): ?>
                                     <?php foreach($skills as $skill): ?>
                                         <tr>
-                                            <td><?php echo $skill->title; ?></td>
-                                            <td><span class="badge bg-secondary"><?php echo ucfirst($skill->category); ?></span></td>
+                                            <td><?php echo $skill->name; ?></td>
+                                            <td><span class="badge bg-secondary"><?php echo ucfirst($skill->category_name); ?></span></td>
                                             <td><?php echo ($skill->is_primary) ? '<i class="fas fa-check text-success"></i>' : '-'; ?></td>
                                             <td>
                                                 <a href="<?php echo site_url('admin/skills/delete/'.$skill->id); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>

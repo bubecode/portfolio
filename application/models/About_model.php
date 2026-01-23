@@ -12,10 +12,11 @@ class About_model extends CI_Model {
         return $query->row();
     }
 
-    public function get_features($about_id) {
+    public function get_expertise($about_id) {
         if(!$about_id) return [];
         $this->db->where('about_id', $about_id);
-        return $this->db->get('about_features')->result();
+        $this->db->order_by('sort_order', 'ASC');
+        return $this->db->get('core_expertise')->result();
     }
 
     public function update_about($data) {
@@ -30,12 +31,12 @@ class About_model extends CI_Model {
         }
     }
 
-    public function add_feature($data) {
-        return $this->db->insert('about_features', $data);
+    public function add_expertise($data) {
+        return $this->db->insert('core_expertise', $data);
     }
 
-    public function delete_feature($id) {
+    public function delete_expertise($id) {
         $this->db->where('id', $id);
-        return $this->db->delete('about_features');
+        return $this->db->delete('core_expertise');
     }
 }

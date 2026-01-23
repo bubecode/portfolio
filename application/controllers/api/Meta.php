@@ -6,14 +6,20 @@ class Meta extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Meta_model');
+        $this->load->model('Profile_model');
     }
 
     public function index() {
-        $meta = $this->Meta_model->get_meta();
+        $profile = $this->Profile_model->get_profile();
+        $socials = $this->Meta_model->get_social_links();
         $nav = $this->Meta_model->get_nav_links();
         
-        $response = (array)$meta;
-        $response['nav_links'] = $nav;
+        $response = [
+            'brand_name' => isset($profile->name) ? $profile->name : 'Portfolio',
+            'copyright_year' => date('Y'),
+            'social_links' => $socials,
+            'nav_links' => $nav
+        ];
 
         $this->output
             ->set_content_type('application/json')

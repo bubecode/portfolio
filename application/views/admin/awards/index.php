@@ -18,6 +18,14 @@
                             <input type="text" name="title" class="form-control" required>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Organization</label>
+                            <input type="text" name="organization" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Year</label>
                             <input type="text" name="year" class="form-control" placeholder="e.g. 2023">
                         </div>
@@ -33,6 +41,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
+                                <th>Organization</th>
                                 <th>Year</th>
                                 <th>Action</th>
                             </tr>
@@ -42,14 +51,16 @@
                                 <?php foreach($awards as $a): ?>
                                     <tr>
                                         <td><?php echo $a->title; ?></td>
+                                        <td><?php echo $a->organization; ?></td>
                                         <td><?php echo $a->year; ?></td>
                                         <td>
+                                            <a href="<?php echo site_url('admin/awards/edit/'.$a->id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                             <a href="<?php echo site_url('admin/awards/delete/'.$a->id); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <tr><td colspan="3" class="text-center">No awards found.</td></tr>
+                                <tr><td colspan="4" class="text-center">No awards found.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

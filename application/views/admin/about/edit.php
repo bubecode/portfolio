@@ -14,34 +14,23 @@
                 <div class="card-body">
                     <?php echo form_open('admin/about/update'); ?>
                         <div class="mb-3">
-                            <label class="form-label">Section Label (e.g., About Me)</label>
-                            <input type="text" name="section_label" class="form-control" value="<?php echo isset($about->section_label) ? $about->section_label : ''; ?>">
+                            <label class="form-label">Role / Title</label>
+                            <input type="text" name="role" class="form-control" value="<?php echo isset($about->role) ? $about->role : ''; ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control" value="<?php echo isset($about->title) ? $about->title : ''; ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Subtitle</label>
-                            <input type="text" name="subtitle" class="form-control" value="<?php echo isset($about->subtitle) ? $about->subtitle : ''; ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">About Text (Markdown supported)</label>
+                            <label class="form-label">About Text</label>
                             <textarea name="about_text" class="form-control" rows="5"><?php echo isset($about->about_text) ? $about->about_text : ''; ?></textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Personal Statement / Quote</label>
+                            <label class="form-label">Personal Statement</label>
                             <textarea name="personal_statement" class="form-control" rows="3"><?php echo isset($about->personal_statement) ? $about->personal_statement : ''; ?></textarea>
                         </div>
                         
                         <hr>
-                        <h5>Add Feature</h5>
+                        <h5>Add Core Expertise</h5>
                         <div class="row g-2">
-                            <div class="col-md-6">
-                                <input type="text" name="new_feature_label" class="form-control" placeholder="Feature Label">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" name="new_feature_icon" class="form-control" placeholder="Icon Class (e.g. fas fa-user)">
+                            <div class="col-md-12">
+                                <input type="text" name="new_expertise" class="form-control" placeholder="Expertise (e.g. ERP Systems)">
                             </div>
                         </div>
 
@@ -55,19 +44,19 @@
         
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">Existing Features</div>
+                <div class="card-header">Core Expertise</div>
                 <ul class="list-group list-group-flush">
-                    <?php if(!empty($features)): ?>
-                        <?php foreach($features as $feature): ?>
+                    <?php if(!empty($expertise)): ?>
+                        <?php foreach($expertise as $item): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
-                                    <i class="<?php echo $feature->icon; ?> me-2"></i> <?php echo $feature->label; ?>
+                                    <?php echo $item->expertise; ?>
                                 </div>
-                                <a href="<?php echo site_url('admin/about/delete_feature/'.$feature->id); ?>" class="text-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
+                                <a href="<?php echo site_url('admin/about/delete_expertise/'.$item->id); ?>" class="text-danger" onclick="return confirm('Delete?');"><i class="fas fa-trash"></i></a>
                             </li>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <li class="list-group-item text-muted">No features added yet.</li>
+                        <li class="list-group-item text-muted">No expertise added yet.</li>
                     <?php endif; ?>
                 </ul>
             </div>

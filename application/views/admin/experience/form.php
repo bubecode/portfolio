@@ -44,9 +44,9 @@
                 <div class="mb-3">
                     <label class="form-label">Highlights (Bullet points, one per line)</label>
                     <textarea name="highlights" class="form-control" rows="5"><?php 
-                        if(isset($item) && $item->highlights_json) {
-                            $highlights = json_decode($item->highlights_json, true) ?: [];
-                            echo implode("\n", $highlights);
+                        if(isset($highlights) && !empty($highlights)) {
+                            $highlight_texts = array_column($highlights, 'highlight');
+                            echo implode("\n", $highlight_texts);
                         }
                     ?></textarea>
                 </div>

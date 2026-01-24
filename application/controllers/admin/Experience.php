@@ -34,6 +34,9 @@ class Experience extends CI_Controller {
         $data['item'] = $this->Experience_model->get_experience($id);
         if (!$data['item']) show_404();
 
+        // Get highlights from table
+        $data['highlights'] = $this->Experience_model->get_highlights($id);
+
         $this->load->view('admin/layout/header', $data);
         $this->load->view('admin/layout/sidebar');
         $this->load->view('admin/experience/form', $data);
@@ -59,15 +62,18 @@ class Experience extends CI_Controller {
                 'start_date' => $this->input->post('start_date', TRUE),
                 'end_date' => $this->input->post('end_date', TRUE),
                 'location' => $this->input->post('location', TRUE),
-                'featured' => $this->input->post('featured') ? 1 : 0,
-                'highlights_json' => json_encode(array_values($highlights_array))
+                'featured' => $this->input->post('featured') ? 1 : 0
             );
 
             if ($id) {
                 $this->Experience_model->update_experience($id, $data);
+                $this->Experience_model->save_highlights($id, $highlights_array);
                 $this->session->set_flashdata('success', 'Experience updated successfully.');
             } else {
-                $this->Experience_model->add_experience($data);
+                $new_id = $this->Experience_model->add_experience($data);
+                if ($new_id) {
+                    $this->Experience_model->save_highlights($new_id, $highlights_array);
+                }
                 $this->session->set_flashdata('success', 'Experience created successfully.');
             }
             redirect('admin/experience');

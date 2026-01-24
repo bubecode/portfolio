@@ -40,7 +40,7 @@ class Content extends API_Base_Controller {
             'title' => isset($profile->title) ? $profile->title : '',
             'hero_text' => isset($profile->hero_text) ? $profile->hero_text : '',
             'subtitle' => isset($about->role) ? $about->role : '',
-            'description' => isset($about->about_text) ? $about->about_text : '',
+            'description' => isset($profile->hero_subtext) ? $profile->hero_subtext : '',
             'status' => isset($profile->status) ? $profile->status : '',
             'email' => isset($profile->email) ? $profile->email : '',
             'location' => isset($profile->location) ? $profile->location : '',
@@ -153,12 +153,18 @@ class Content extends API_Base_Controller {
         }, $education_raw);
 
         // Map Nav Links
-        $navigation = array_map(function($n) {
-            return [
-                'name' => $n->name,
-                'href' => $n->href
-            ];
-        }, $nav_links);
+        $navigation = [];
+        $seen_links = [];
+        foreach ($nav_links as $n) {
+            $key = $n->name . $n->href;
+            if (!isset($seen_links[$key])) {
+                $navigation[] = [
+                    'name' => $n->name,
+                    'href' => $n->href
+                ];
+                $seen_links[$key] = true;
+            }
+        }
 
         // Map Marquee
         $marquee_data = array_map(function($m) {

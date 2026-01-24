@@ -43,7 +43,7 @@ class Profile extends API_Base_Controller {
                 'title' => isset($profile->title) ? $profile->title : '',
                 'hero_text' => isset($profile->hero_text) ? $profile->hero_text : '',
                 'subtitle' => isset($about->role) ? $about->role : '',
-                'description' => isset($about->about_text) ? $about->about_text : '',
+                'description' => isset($profile->hero_subtext) ? $profile->hero_subtext : '',
                 'status' => isset($profile->status) ? $profile->status : '',
                 'email' => isset($profile->email) ? $profile->email : '',
                 'location' => isset($profile->location) ? $profile->location : '',
